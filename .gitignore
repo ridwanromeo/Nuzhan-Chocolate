@@ -1,0 +1,6 @@
+node_modules
+dist
+_tools
+_frames
+*.local
+.DS_Store

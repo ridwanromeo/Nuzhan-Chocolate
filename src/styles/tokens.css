@@ -1,0 +1,316 @@
+/* ————— Nuzhan Chocolate · design tokens & base ————— */
+:root {
+  --cacao-950: #120802;
+  --cacao-900: #1d0f07;
+  --cacao-850: #241309;
+  --cacao-800: #2e1a0d;
+  --cacao-700: #432712;
+  --cacao-500: #7a4a22;
+  --caramel: #c98a3d;
+  --gold: #e4b15b;
+  --gold-soft: #f0cd8e;
+  --cream: #f5e9d3;
+  --cream-2: #eddcbd;
+  --blush: #f2cfa8;
+  --ruby: #b3202c;
+  --berry: #7e1f2e;
+  --pistachio: #8a9a4b;
+  --ink: #1d0f07;
+  --ink-soft: rgba(29, 15, 7, 0.68);
+  --cream-soft: rgba(245, 233, 211, 0.66);
+
+  --font-display: 'Fraunces', 'Georgia', serif;
+  --font-body: 'Manrope', 'Segoe UI', system-ui, sans-serif;
+  --font-fa: 'Vazirmatn', 'Manrope', sans-serif;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-premium: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+
+  --dur-quick: 160ms;
+  --dur-standard: 450ms;
+  --dur-slow: 900ms;
+
+  --wrap: min(1320px, 100% - clamp(2.5rem, 6vw, 5rem));
+  --radius-arch: 999px 999px 28px 28px;
+  --sat: env(safe-area-inset-top, 0px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto;
+  -webkit-text-size-adjust: 100%;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--cacao-950);
+  color: var(--cream);
+  line-height: 1.6;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body.locked {
+  overflow: hidden;
+}
+
+::selection {
+  background: var(--caramel);
+  color: var(--cacao-950);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Custom scrollbar — thin caramel on cacao */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cacao-950);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--cacao-500);
+  border-radius: 8px;
+  border: 2px solid var(--cacao-950);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--caramel);
+}
+
+/* Film grain — fixed, pointer-transparent, GPU-cheap */
+.grain::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  z-index: 2000;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.055;
+  animation: grain-shift 0.9s steps(4) infinite;
+}
+@keyframes grain-shift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2%, 1%); }
+  50% { transform: translate(1%, -2%); }
+  75% { transform: translate(-1%, 2%); }
+  100% { transform: translate(2%, -1%); }
+}
+
+/* Layout shells */
+.wrap {
+  width: var(--wrap);
+  margin-inline: auto;
+}
+.section-pad {
+  padding-block: clamp(5rem, 11vw, 9.5rem);
+}
+
+/* Display type */
+.display {
+  font-family: var(--font-display);
+  font-weight: 560;
+  line-height: 0.94;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+.display-italic {
+  font-style: italic;
+  font-weight: 420;
+}
+.fa-mark {
+  font-family: var(--font-fa);
+}
+
+/* Word/char masks for reveals (built by JS) */
+.wmask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.wmask .w,
+.wmask .c {
+  display: inline-block;
+  will-change: transform;
+}
+
+/* Eyebrow pill */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.5em 1.1em;
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.eyebrow .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--caramel);
+}
+
+/* ——— Button-in-button island CTA ——— */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.55rem 0.6rem 0.55rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  background: var(--caramel);
+  color: var(--cacao-950);
+  transition:
+    transform var(--dur-quick) var(--ease-out),
+    background-color var(--dur-standard) var(--ease-out),
+    box-shadow var(--dur-standard) var(--ease-out);
+  box-shadow: 0 10px 30px -12px rgba(201, 138, 61, 0.55);
+  will-change: transform;
+}
+.btn:hover {
+  background: var(--gold);
+  box-shadow: 0 16px 40px -12px rgba(228, 177, 91, 0.6);
+}
+.btn:active {
+  transform: scale(0.97);
+}
+.btn .btn-orb {
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: rgba(18, 8, 2, 0.14);
+  transition: transform var(--dur-standard) var(--ease-out);
+}
+.btn:hover .btn-orb {
+  transform: translate(3px, -3px) scale(1.06);
+}
+.btn .btn-orb svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--cream);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--cream) 32%, transparent);
+}
+.btn-ghost:hover {
+  background: rgba(245, 233, 211, 0.08);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--cream) 60%, transparent);
+}
+.btn-ghost .btn-orb {
+  background: rgba(245, 233, 211, 0.12);
+}
+.btn-dark {
+  background: var(--cacao-900);
+  color: var(--cream);
+  box-shadow: 0 10px 30px -12px rgba(18, 8, 2, 0.5);
+}
+.btn-dark:hover {
+  background: var(--cacao-800);
+}
+.btn-dark .btn-orb {
+  background: rgba(245, 233, 211, 0.14);
+}
+
+/* Double-bezel frame for imagery */
+.bezel {
+  padding: clamp(6px, 0.8vw, 10px);
+  border-radius: 26px;
+  background: color-mix(in srgb, currentColor 7%, transparent);
+  border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+}
+.bezel > .bezel-core {
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.14);
+}
+.bezel-arch {
+  border-radius: 999px 999px 30px 30px;
+}
+.bezel-arch > .bezel-core {
+  border-radius: 999px 999px 22px 22px;
+}
+
+/* Hide native cursor when the custom one is live (fine pointers only) */
+@media (pointer: fine) {
+  body.has-cursor,
+  body.has-cursor a,
+  body.has-cursor button,
+  body.has-cursor input,
+  body.has-cursor textarea,
+  body.has-cursor label {
+    cursor: none;
+  }
+}
+
+/* Guards */
+@media (prefers-reduced-motion: reduce) {
+  .grain::after {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
